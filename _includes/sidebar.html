@@ -1,0 +1,48 @@
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="{{ site.baseurl }}">
+          {{ site.title }}
+        </a>
+      </h1>
+      <p>{{ site.description }}</p>
+    </div>
+    <nav class="sidebar-nav">
+      {% for b in site.pages %}
+        {% if b.title != null %}
+          {% if b.layout == "book" %}
+            {% if b.book == page.book %}
+              <a class="sidebar-nav-book active" href="{{ b.url }}">{{ b.title }}</a>
+              {% for c in site.pages %}
+                {% if c.title != null %}
+                  {% if c.layout == "chapter" %}
+                    {% if c.book == page.book %}
+                      <a class="sidebar-nav-chapter {% if c.url == page.url %} active {% endif %}" href="{{ c.url }}">{{ c.title }}</a>
+                      {% for p in site.pages %}
+                        {% if p.title != null %}
+                          {% if p.layout == "page" %}
+                            {% if p.book == page.book %}
+                              {% if p.chapter == page.chapter %}
+                                <a class="sidebar-nav-page {% if p.url == page.url %} active {% endif %}" href="{{ p.url }}">{{ p.title }}</a>
+                              {% endif %}
+                            {% endif %}
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <a class="sidebar-nav-book" href="{{ b.url }}">{{ b.title }}</a>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </nav>
+    <p>
+      <span class="deemp"><span class="copyleft">&copy;</span>{{site.time | date: '%Y' }} No rights reserved.</span>
+    </p>
+  </div>
+</div>
